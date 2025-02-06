@@ -15,8 +15,7 @@ pip install -r requirements.txt
 ```
 
 ## Usage
-**Note:** The script only handles one execution at a time, multiple files will be suppported later on. You must run it separately for different metric configurations.
-Run the script with the required arguments:
+**Note:** Updated for batch inference as well for SECS and nMOS metrics. CER however is done interatively since whisper doesn't support batch inference:
 
 ```sh
 python metric.py [--secs] [--nmos] [--cer] input_file [--ref_file REF_FILE] [--ground_truth GROUND_TRUTH]
@@ -29,6 +28,18 @@ python metric.py [--secs] [--nmos] [--cer] input_file [--ref_file REF_FILE] [--g
 - `--cer` (optional): Runs CER metric (requires `--ground_truth`).
 - `--ref_file` (optional): Reference file path for SECS.
 - `--ground_truth` (optional): Ground truth text for CER.
+
+```sh
+python metric_batch.py [--secs] [--nmos] [--cer] --input_csv input_csv_file --output_csv output_csv_file
+```
+
+### Arguments
+- `--secs` (optional): Runs SECS metric (requires `--ref_file` in input file).
+- `--nmos` (optional): Runs nMOS metric.
+- `--cer` (optional): Runs CER metric (requires `--ground_truth` in input file).
+- `'--input_csv'` (required): Input CSV file path with columns file_name ,ground_truth, ref_file 
+- `'--output'` (required): Output CSV file to store the evaluations with columns file_name,SECS,nMOS,CER
+
 
 ### Example Commands
 #### Run SECS metric:
@@ -49,6 +60,11 @@ python metric.py --cer input.wav --ground_truth "expected transcript"
 #### Run all metrics:
 ```sh
 python metric.py --secs --nmos --cer input.wav --ref_file reference.wav --ground_truth "expected transcript"
+```
+
+#### Run all metrics with batch inference:
+```sh
+python metric_batch.py --secs --nmos --cer --input_csv input.csv --output_csv output.csv
 ```
 
 ## Error Handling
