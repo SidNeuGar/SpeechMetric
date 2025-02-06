@@ -17,11 +17,12 @@ pip install -r requirements.txt
 ## Usage
 **Note:** Updated for batch inference as well for SECS and nMOS metrics. CER however is done interatively since whisper doesn't support batch inference:
 
+### Single file  
 ```sh
 python metric.py [--secs] [--nmos] [--cer] input_file [--ref_file REF_FILE] [--ground_truth GROUND_TRUTH]
 ```
 
-### Arguments
+#### Arguments
 - `input_file` (required): Path to the input audio file.
 - `--secs` (optional): Runs SECS metric (requires `--ref_file`).
 - `--nmos` (optional): Runs nMOS metric.
@@ -29,11 +30,12 @@ python metric.py [--secs] [--nmos] [--cer] input_file [--ref_file REF_FILE] [--g
 - `--ref_file` (optional): Reference file path for SECS.
 - `--ground_truth` (optional): Ground truth text for CER.
 
+### Batch Inference
 ```sh
 python metric_batch.py [--secs] [--nmos] [--cer] --input_csv input_csv_file --output_csv output_csv_file
 ```
 
-### Arguments
+#### Arguments
 - `--secs` (optional): Runs SECS metric (requires `--ref_file` in input file).
 - `--nmos` (optional): Runs nMOS metric.
 - `--cer` (optional): Runs CER metric (requires `--ground_truth` in input file).
