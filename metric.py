@@ -1,4 +1,4 @@
-from SpeeechMetric.ECAPA2_SECS import predict_SECS
+from SpeeechMetric.WavLMTCDNN_secs import predict_SECS
 from SpeeechMetric.nMOS import predict_nMOS
 from SpeeechMetric.whisper_CER import predict_CER
 
