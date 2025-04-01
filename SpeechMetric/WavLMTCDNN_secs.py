@@ -1,7 +1,7 @@
 import torch
 import torchaudio
 from torchaudio.pipelines import WAVLM_BASE_PLUS
-from SpeeechMetric.utils import get_random_segment
+from SpeechMetric.utils import get_random_segment
 
 # Load WavLM model
 bundle = WAVLM_BASE_PLUS

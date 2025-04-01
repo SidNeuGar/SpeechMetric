@@ -1,6 +1,6 @@
-from SpeeechMetric.ECAPA2_SECS import predict_SECS_batch
-from SpeeechMetric.nMOS import predict_nMOS_batch
-from SpeeechMetric.whisper_CER import predict_CER
+from SpeechMetric.ECAPA2_SECS import predict_SECS_batch
+from SpeechMetric.nMOS import predict_nMOS_batch
+from SpeechMetric.whisper_CER import predict_CER
 import pandas as pd
 
 

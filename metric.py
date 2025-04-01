@@ -1,6 +1,6 @@
-from SpeeechMetric.WavLMTCDNN_secs import predict_SECS
-from SpeeechMetric.nMOS import predict_nMOS
-from SpeeechMetric.whisper_CER import predict_CER
+from SpeechMetric.WavLMTCDNN_secs import predict_SECS
+from SpeechMetric.nMOS import predict_nMOS
+from SpeechMetric.whisper_CER import predict_CER
 
 def execute_metrics(secs=False, nmos=False, cer=False, input_file=None, ref_file=None, ground_truth=None):
     results = {}

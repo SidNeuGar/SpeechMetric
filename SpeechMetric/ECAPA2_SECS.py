@@ -1,8 +1,8 @@
 from huggingface_hub import hf_hub_download
-from SpeeechMetric.utils import get_random_segment
+from SpeechMetric.utils import get_random_segment
 
 # automatically checks for cached file, optionally set `cache_dir` location
-model_file = hf_hub_download(repo_id='Jenthe/ECAPA2', filename='ecapa2.pt', cache_dir=None)
+model_file = hf_hub_download(repo_id='Jenthe/ECAPA2', filename='ecapa2.pt', cache_dir='./cache_models')
 
 import torch
 
@@ -23,6 +23,7 @@ def predict_SECS(file_path1, file_path2):
 
     # Generate embedding for first audio
     embedding_1 = ecapa2(audio1)
+    print(embedding_1.shape)
 
     # Process second audio file
     audio2 = get_random_segment(file_path2)

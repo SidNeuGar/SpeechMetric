@@ -1,5 +1,5 @@
 import torch
-from SpeeechMetric.utils import get_random_segment
+from SpeechMetric.utils import get_random_segment
 
 def predict_nMOS(file_path):
 
