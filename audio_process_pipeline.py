@@ -98,47 +98,6 @@ def extract_speaker_segments(audio_path, diarization, segments_dir):
     return speaker_segments
 
 
-# --- STEP 5: TRANSCRIBE USING WHISPER ---
-# def transcribe_segments(speaker_segments, transcript_file):
-#     # Initialize Whisper pipeline (using the "whisper-small" model in this example)
-#     whisper_pipe = hf_pipeline("automatic-speech-recognition", model="openai/whisper-small")
-#     full_transcript = ""
-#     with open(transcript_file, "w") as out:
-#         for speaker, files in speaker_segments.items():
-#             for file in files:
-#                 result = whisper_pipe(file)
-#                 line = f"[{speaker}] {os.path.basename(file)}: {result['text']}\n"
-#                 out.write(line)
-#                 full_transcript += line
-#                 print(f"[✓] Transcribed {file}")
-#     print(f"[✓] Full transcript saved to {transcript_file}")
-#     return full_transcript
-#
-# import csv
-#
-# MASTER_TRANSCRIPT_CSV = "master_transcript.csv"
-#
-# def transcribe_segments(speaker_segments, base_dir):
-#     whisper_pipe = hf_pipeline("automatic-speech-recognition", model="openai/whisper-small")
-#     local_transcript_path = os.path.join(base_dir, "speaker_transcript.txt")
-#
-#     with open(local_transcript_path, "w") as txt_out, open(MASTER_TRANSCRIPT_CSV, "a", newline='') as csv_out:
-#         csv_writer = csv.writer(csv_out)
-#         for speaker, files in speaker_segments.items():
-#             for file in files:
-#                 result = whisper_pipe(file)
-#                 transcript_text = result['text'].strip()
-#
-#                 # Write to local .txt
-#                 txt_out.write(f"[{speaker}] {os.path.basename(file)}: {transcript_text}\n")
-#
-#                 # Write to global CSV
-#                 csv_writer.writerow([os.path.abspath(file), transcript_text])
-#                 print(f"[✓] Transcribed {file}")
-#     print(f"[✓] Full transcript saved to {local_transcript_path}")
-#     print(f"[✓] Appended transcripts to {MASTER_TRANSCRIPT_CSV}")
-
-
 def transcribe_segments(speaker_segments, base_dir):
     whisper_pipe = hf_pipeline("automatic-speech-recognition", model="openai/whisper-small")
     local_transcript_path = os.path.join(base_dir, "speaker_transcript.txt")
@@ -158,40 +117,6 @@ def transcribe_segments(speaker_segments, base_dir):
 
     print(f"[✓] Full transcript saved to {local_transcript_path}")
     return segment_results
-
-
-# --- PROCESS A SINGLE AUDIO FILE ---
-# def process_audio_file(input_file, output_root):
-#     # Create a unique directory for the processed file
-#     base_filename = os.path.splitext(os.path.basename(input_file))[0]
-#     unique_id = uuid.uuid4().hex
-#     unique_dir = os.path.join(output_root, f"{base_filename}_{unique_id}")
-#     os.makedirs(unique_dir, exist_ok=True)
-#
-#     # Define file paths inside the unique directory
-#     standardized_path = os.path.join(unique_dir, STANDARDIZED_AUDIO)
-#     cleaned_path = os.path.join(unique_dir, CLEANED_AUDIO)
-#     rttm_path = os.path.join(unique_dir, DIARIZATION_RTTM)
-#     segments_dir = os.path.join(unique_dir, SPEAKER_SEGMENTS_DIR)
-#     transcript_path = os.path.join(unique_dir, TRANSCRIPT_FILE)
-#
-#     print(f"\n[INFO] Processing file: {input_file}")
-#     # Step 1: Standardize the audio file
-#     standardize_audio(input_file, standardized_path)
-#
-#     # Step 2: Denoise the audio file
-#     denoise_audio(standardized_path, cleaned_path)
-#
-#     # Step 3: Diarize the cleaned audio and save RTTM
-#     diarization = diarize_audio(cleaned_path, rttm_path)
-#
-#     # Step 4: Extract speaker segments from the cleaned audio
-#     speaker_segments = extract_speaker_segments(cleaned_path, diarization, segments_dir)
-#
-#     # Step 5: Transcribe segments using Whisper and return the full transcript text
-#     full_transcript = transcribe_segments(speaker_segments, transcript_path)
-#
-#     return unique_dir, full_transcript
 
 
 def process_audio_file(input_file, output_root):
@@ -225,31 +150,6 @@ def process_audio_file(input_file, output_root):
 
     return unique_dir, segment_results
 
-# --- MAIN PROCESSOR ---
-# def process_all_audio(input_root, output_root, master_csv):
-#     # Create output root if it doesn't exist
-#     os.makedirs(output_root, exist_ok=True)
-#
-#     # Prepare (or create) master CSV: if it doesn't exist, write header.
-#     if not os.path.exists(master_csv):
-#         with open(master_csv, "w", newline="") as csvfile:
-#             writer = csv.writer(csvfile)
-#             writer.writerow(["Processed_Folder", "Transcript"])
-#
-#     # Walk through the input directory tree
-#     supported_extensions = (".wav", ".mp3", ".m4a", ".flac", ".ogg")
-#     for root, dirs, files in os.walk(input_root):
-#         for file in files:
-#             if file.lower().endswith(supported_extensions):
-#                 input_file = os.path.join(root, file)
-#                 try:
-#                     processed_folder, transcript = process_audio_file(input_file, output_root)
-#                     # Append result to the master CSV; use absolute path for processed_folder.
-#                     with open(master_csv, "a", newline="") as csvfile:
-#                         writer = csv.writer(csvfile)
-#                         writer.writerow([os.path.abspath(processed_folder), transcript.strip()])
-#                 except Exception as e:
-#                     print(f"[!] Error processing {input_file}: {e}")
 
 def process_all_audio(input_root, output_root, master_csv):
     # Create output root if it doesn't exist
